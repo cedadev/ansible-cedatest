@@ -16,6 +16,6 @@
   roles:
     - jasmin_roles/git
     - jasmin_roles/python36
-    - jasmin_roles/postgresql
+    - jasmin_roles/postgresql9
     - jasmin_roles/django_application
     - jasmin_roles/django_deploy_apache
