@@ -1,0 +1,61 @@
+# Variables for deployment
+
+application_user: root
+application_home: /usr/local/cedatest
+##
+# Install settings: production
+##
+install_mode: production
+application_name: cedatest_control
+application_site_package: cedatest_site
+#admin_ip_range: 130.246.0.0/16
+
+application_database_name: "{{ application_name }}"
+
+application_git_repo: "https://github.com/cedadev/django-cedatest"
+application_git_version: 0.3
+application_dirname: "{{ application_name }}"
+application_dev_deps: []
+
+##
+# Apache / httpd settings
+##
+use_self_signed_ssl_cert: true
+wsgi_user: apache
+wsgi_group: apache
+
+disable_port_80: true
+disable_port_443: false
+
+##
+# Databases
+##
+postgresql_databases:
+  - name: "{{ application_database_name }}"
+    user: "{{ application_user }}"
+
+##
+# Django settings
+##
+debug_mode: True
+
+django_settings_template: django_settings.py
+
+static_root: /var/www/static
+
+django_databases:
+  default:
+    ENGINE: django.db.backends.postgresql
+    # Required because postgresql is configured to put socket files in /tmp by default
+    HOST: /tmp
+    NAME: "{{ application_database_name }}"
+    ATOMIC_REQUESTS: true
+
+server_name: "{{ private_ip_address }}"
+internal_server_name: "{{ server_name }}"
+server_email: cedatest-control@cedatest-control.ceda.ac.uk
+
+django_superuser:
+  username: "{{ prompt_superuser_username }}"
+  email: "{{ prompt_superuser_email }}"
+  password: "{{ prompt_superuser_password }}"

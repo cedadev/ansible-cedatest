@@ -1,0 +1,21 @@
+---
+
+# This is the main playbook for deploying the portal in development mode
+
+- hosts: all
+  remote_user: root
+  force_handlers: yes
+  vars_prompt:
+    - name: "prompt_superuser_username"
+      prompt: "Username for Django superuser"
+    - name: "prompt_superuser_email"
+      prompt: "Email address for Django superuser"
+    - name: "prompt_superuser_password"
+      prompt: "Password for Django superuser"
+      private: yes
+  roles:
+    - jasmin_roles/git
+    - jasmin_roles/python36
+    - jasmin_roles/postgresql
+    - jasmin_roles/django_application
+    - jasmin_roles/django_deploy_apache
